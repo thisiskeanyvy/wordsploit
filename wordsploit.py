@@ -1,4 +1,5 @@
 import platform
+import sys
 import time
 import random
 import hashlib
@@ -154,8 +155,25 @@ def length_decode():
     else:
         erreur()
 
+#loader en attendant la fin du decode
+def decode_status():
+    loader_length = 40
+
+    sys.stdout.write("\n[%s]" % (" " * loader_length))
+    sys.stdout.flush()
+    sys.stdout.write("\b" * (loader_length+1))
+
+    for i in range(loader_length):
+        time.sleep(1)
+        sys.stdout.write("-")
+        sys.stdout.flush()
+
+    sys.stdout.write("\n")
+
+
 #minuscules
 def md5_minuscules(word, length):
+    start_decode = time.time()
     global md5_hash
     global minuscules
     global length_decode
@@ -165,6 +183,8 @@ def md5_minuscules(word, length):
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
+                total_time_decode = time.time() - start_decode
+                print("Temps de calcul total : " + str(total_time_decode) + "s\n")
                 quit()
             else:
                 ##print(word + letter)
@@ -172,6 +192,7 @@ def md5_minuscules(word, length):
 
 #majuscules
 def md5_majuscules(word, length):
+    start_decode = time.time()
     global md5_hash
     global majuscules
     global length_decode
@@ -181,6 +202,8 @@ def md5_majuscules(word, length):
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
+                total_time_decode = time.time() - start_decode
+                print("Temps de calcul total : " + str(total_time_decode) + "s\n")
                 quit()
             else:
                 ##print(word + letter)
@@ -188,6 +211,7 @@ def md5_majuscules(word, length):
 
 #chiffres
 def md5_chiffres(word, length):
+    start_decode = time.time()
     global md5_hash
     global chiffres
     global spcharacters
@@ -198,6 +222,8 @@ def md5_chiffres(word, length):
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
+                total_time_decode = time.time() - start_decode
+                print("Temps de calcul total : " + str(total_time_decode) + "s\n")
                 quit()
             else:
                 ##print(word + letter)
@@ -205,6 +231,7 @@ def md5_chiffres(word, length):
 
 #minuscules + majuscules
 def md5_min_maj(word, length):
+    start_decode = time.time()
     global md5_hash
     global minuscules
     global majuscules
@@ -215,6 +242,8 @@ def md5_min_maj(word, length):
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
+                total_time_decode = time.time() - start_decode
+                print("Temps de calcul total : " + str(total_time_decode) + "s\n")
                 quit()
             else:
                 ##print(word + letter)
@@ -222,6 +251,7 @@ def md5_min_maj(word, length):
 
 #minuscules + chiffres
 def md5_min_chif(word, length):
+    start_decode = time.time()
     global md5_hash
     global minuscules
     global chiffres
@@ -232,6 +262,8 @@ def md5_min_chif(word, length):
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
+                total_time_decode = time.time() - start_decode
+                print("Temps de calcul total : " + str(total_time_decode) + "s\n")
                 quit()
             else:
                 ##print(word + letter)
@@ -239,6 +271,7 @@ def md5_min_chif(word, length):
 
 #minuscules + chiffres + majuscules + spcharacters
 def md5_all(word, length):
+    start_decode = time.time()
     global md5_hash
     global minuscules
     global majuscules
@@ -250,7 +283,9 @@ def md5_all(word, length):
             dicionnaire = word + letter
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
-                print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
+                print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + '\033[0m')
+                total_time_decode = time.time() - start_decode
+                print("Temps de calcul total : " + str(total_time_decode) + "s\n")
                 quit()
             else:
                 ##print(word + letter)
