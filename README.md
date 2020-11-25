@@ -1,2 +1,2 @@
-# wordsploit
-Programme de brute force amélioré
+# WordSploit
+Programme de brute force amélioré en récursif
