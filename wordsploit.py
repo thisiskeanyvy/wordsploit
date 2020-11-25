@@ -21,7 +21,7 @@ driver.set_window_size(1024, 650)
 webdriver.ChromeOptions().add_argument("--disable-popup-blocking")
 webdriver.ChromeOptions().add_argument("--disable-extensions")
 
-print('''
+print('\033[31m' + '''
  __      __                .____________      .__         .__  __
 /  \    /  \___________  __| _/   _____/_____ |  |   ____ |__|/  |_
 \   \/\/   /  _ \_  __ \/ __ |\_____  \ ____ \|  |  /  _ \|  \   __\ \
@@ -30,15 +30,15 @@ print('''
        \/                   \/       \/|__|
 
     --- Développé par Keany Vy KHUN ---
-''')
+''' + '\033[0m')
 
 def prevent():
-    print('Ordinateur:', platform.platform())
+    print('\033[33m' + 'Ordinateur:', platform.platform())
     print('Nom:', platform.node())
     print('Processeur:', platform.processor())
 
 def main():
-    methode = input("""\n
+    methode = input('\033[0m'+"""\n
 1 - Attaque par force brute
 2 - Attaque par dicionnaire
 3 - Déchiffrement de Hash
@@ -100,7 +100,7 @@ Veuillez choisir un encodage : """)
 def call_hash_md5():
     global md5_hash
     global options_decode
-    md5_hash = input("Entrez le hash en md5 : ")
+    md5_hash = input("\nEntrez le hash en md5 : ")
     dictionnaire()
 
     if options_decode == "1" and encodage == "1":
@@ -130,8 +130,11 @@ def menu_decode_options():
 6 - Minuscules + Majuscules + Chiffres (Tout tester)
 
 Veuillez choisir une option à tester : """)
-    length_decode()
-    call_hash_md5()
+    if options_decode.isdigit():
+        length_decode()
+        call_hash_md5()
+    else:
+        erreur()
 
 def dictionnaire():
     global minuscules
@@ -146,7 +149,10 @@ def dictionnaire():
 def length_decode():
     global length_decode
     nombre_max = input("\nIndiquez un nombre de caractères à tester : ")
-    length_decode = int(nombre_max)
+    if nombre_max.isdigit():
+        length_decode = int(nombre_max)
+    else:
+        erreur()
 
 #minuscules
 def md5_minuscules(word, length):
@@ -157,8 +163,8 @@ def md5_minuscules(word, length):
         for letter in minuscules:
             dicionnaire = word + letter
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
-                print("\nLe hash déchiffré est " + word + letter)
-                print(md5_hash + " = " + word + letter + "\n")
+                print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
+                print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 quit()
             else:
                 ##print(word + letter)
@@ -173,8 +179,8 @@ def md5_majuscules(word, length):
         for letter in majuscules:
             dicionnaire = word + letter
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
-                print("\nLe hash déchiffré est " + word + letter)
-                print(md5_hash + " = " + word + letter + "\n")
+                print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
+                print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 quit()
             else:
                 ##print(word + letter)
@@ -190,8 +196,8 @@ def md5_chiffres(word, length):
         for letter in chiffres + spcharacters:
             dicionnaire = word + letter
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
-                print("\nLe hash déchiffré est " + word + letter)
-                print(md5_hash + " = " + word + letter + "\n")
+                print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
+                print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 quit()
             else:
                 ##print(word + letter)
@@ -207,8 +213,8 @@ def md5_min_maj(word, length):
         for letter in minuscule + majuscules:
             dicionnaire = word + letter
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
-                print("\nLe hash déchiffré est " + word + letter)
-                print(md5_hash + " = " + word + letter + "\n")
+                print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
+                print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 quit()
             else:
                 ##print(word + letter)
@@ -224,8 +230,8 @@ def md5_min_chif(word, length):
         for letter in minuscule + chiffres:
             dicionnaire = word + letter
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
-                print("\nLe hash déchiffré est " + word + letter)
-                print(md5_hash + " = " + word + letter + "\n")
+                print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
+                print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 quit()
             else:
                 ##print(word + letter)
@@ -243,8 +249,8 @@ def md5_all(word, length):
         for letter in minuscules + majuscules + chiffres + spcharacters:
             dicionnaire = word + letter
             if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
-                print("\nLe hash déchiffré est " + word + letter)
-                print(md5_hash + " = " + word + letter + "\n")
+                print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
+                print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 quit()
             else:
                 ##print(word + letter)
@@ -255,6 +261,7 @@ def method_4():
 
 def erreur():
     print('Entrez un nombre valide.')
+    quit()
 
 def close_chrome():
     driver.delete_all_cookies()
