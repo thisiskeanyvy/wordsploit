@@ -14,13 +14,16 @@ from selenium.webdriver.common.keys import Keys
 # - Description: Programme d'attaque par force brute amélioré
 # - Status: Non fonctionnel
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--log-level=3")
-driver = webdriver.Chrome(r"chromedriver.exe", options=chrome_options)
-driver.set_window_size(1024, 650)
-webdriver.ChromeOptions().add_argument("--disable-popup-blocking")
-webdriver.ChromeOptions().add_argument("--disable-extensions")
+def selenium():
+    global driver
+    global chrome_options
+    chrome_options = webdriver.ChromeOptions()
+    #chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--log-level=3")
+    driver = webdriver.Chrome(r"chromedriver.exe", options=chrome_options)
+    driver.set_window_size(1024, 650)
+    webdriver.ChromeOptions().add_argument("--disable-popup-blocking")
+    webdriver.ChromeOptions().add_argument("--disable-extensions")
 
 print('\033[31m' + '''
  __      __                .____________      .__         .__  __
@@ -59,6 +62,8 @@ Veuillez entrer un nombre : """)
         erreur()
 
 def method_1():
+    selenium()
+    global driver
     target = input("\nEntrez l'url du site : ")
     driver.get(target)
     global username
@@ -66,6 +71,7 @@ def method_1():
     brute_force()
 
 def brute_force():
+    global driver
     global username
     time.sleep(2)
     driver.find_element_by_xpath('//*[@type="text"]').send_keys(username)
@@ -78,11 +84,11 @@ def method_2():
     print('method 2')
 
 def method_3():
-    close_chrome()
     menu_decode()
 
 def menu_decode():
     global encodage
+    global name_encodage
     encodage = input("""\n
 1 - MD5
 2 - SHA1
@@ -94,6 +100,22 @@ def menu_decode():
 Veuillez choisir un encodage : """)
 
     if encodage == "1":
+        name_encodage = "md5"
+        menu_decode_options()
+    elif encodage == "2":
+        name_encodage = "sha1"
+        menu_decode_options()
+    elif encodage == "3":
+        name_encodage = "sha224"
+        menu_decode_options()
+    elif encodage == "4":
+        name_encodage = "sha256"
+        menu_decode_options()
+    elif encodage == "5":
+        name_encodage = "sha384"
+        menu_decode_options()
+    elif encodage == "6":
+        name_encodage = "sha512"
         menu_decode_options()
     else:
         erreur()
@@ -101,26 +123,25 @@ Veuillez choisir un encodage : """)
 def call_hash_md5():
     global md5_hash
     global options_decode
-    md5_hash = input("\nEntrez le hash en md5 : ")
+    md5_hash = input("\nEntrez le hash en "+ name_encodage +" : ")
     dictionnaire()
 
-    if options_decode == "1" and encodage == "1":
+    if options_decode == "1":
         md5_minuscules('', 1)
-    elif options_decode == "2" and encodage == "1":
+    elif options_decode == "2":
         md5_majuscules('', 1)
-    elif options_decode == "3" and encodage == "1":
+    elif options_decode == "3":
         md5_chiffres('', 1)
-    elif options_decode == "4" and encodage == "1":
+    elif options_decode == "4":
         md5_min_maj('', 1)
-    elif options_decode == "5" and encodage == "1":
+    elif options_decode == "5":
         md5_min_chif('', 1)
-    elif options_decode == "6" and encodage == "1":
+    elif options_decode == "6":
         md5_all('', 1)
     else:
         erreur()
 
 def menu_decode_options():
-    global encodage
     global options_decode
     options_decode = input("""\n
 1 - Minuscules (Rapide)
@@ -174,13 +195,26 @@ def decode_status():
 #minuscules
 def md5_minuscules(word, length):
     start_decode = time.time()
-    global md5_hash
-    global minuscules
-    global length_decode
     if length <= length_decode:
         for letter in minuscules:
             dicionnaire = word + letter
-            if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
+
+            if encodage == "1":
+                encodage_type = hashlib.md5()
+            elif encodage == "2":
+                encodage_type = hashlib.sha1()
+            elif encodage == "3":
+                encodage_type = hashlib.sha224()
+            elif encodage == "4":
+                encodage_type = hashlib.sha256()
+            elif encodage == "5":
+                encodage_type = hashlib.sha384()
+            elif encodage == "6":
+                encodage_type = hashlib.sha512()
+
+            encodage_type.update(dicionnaire.encode('utf-8'))
+
+            if md5_hash == encodage_type.hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 total_time_decode = time.time() - start_decode
@@ -193,13 +227,26 @@ def md5_minuscules(word, length):
 #majuscules
 def md5_majuscules(word, length):
     start_decode = time.time()
-    global md5_hash
-    global majuscules
-    global length_decode
     if length <= length_decode:
         for letter in majuscules:
             dicionnaire = word + letter
-            if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
+
+            if encodage == "1":
+                encodage_type = hashlib.md5()
+            elif encodage == "2":
+                encodage_type = hashlib.sha1()
+            elif encodage == "3":
+                encodage_type = hashlib.sha224()
+            elif encodage == "4":
+                encodage_type = hashlib.sha256()
+            elif encodage == "5":
+                encodage_type = hashlib.sha384()
+            elif encodage == "6":
+                encodage_type = hashlib.sha512()
+
+            encodage_type.update(dicionnaire.encode('utf-8'))
+
+            if md5_hash == encodage_type.hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 total_time_decode = time.time() - start_decode
@@ -212,14 +259,25 @@ def md5_majuscules(word, length):
 #chiffres
 def md5_chiffres(word, length):
     start_decode = time.time()
-    global md5_hash
-    global chiffres
-    global spcharacters
-    global length_decode
     if length <= length_decode:
         for letter in chiffres + spcharacters:
             dicionnaire = word + letter
-            if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
+
+            if encodage == "1":
+                encodage_type = hashlib.md5()
+            elif encodage == "2":
+                encodage_type = hashlib.sha1()
+            elif encodage == "3":
+                encodage_type = hashlib.sha224()
+            elif encodage == "4":
+                encodage_type = hashlib.sha256()
+            elif encodage == "5":
+                encodage_type = hashlib.sha384()
+            elif encodage == "6":
+                encodage_type = hashlib.sha512()
+
+            encodage_type.update(dicionnaire.encode('utf-8'))
+            if md5_hash == encodage_type.hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 total_time_decode = time.time() - start_decode
@@ -232,14 +290,26 @@ def md5_chiffres(word, length):
 #minuscules + majuscules
 def md5_min_maj(word, length):
     start_decode = time.time()
-    global md5_hash
-    global minuscules
-    global majuscules
-    global length_decode
     if length <= length_decode:
         for letter in minuscule + majuscules:
             dicionnaire = word + letter
-            if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
+
+            if encodage == "1":
+                encodage_type = hashlib.md5()
+            elif encodage == "2":
+                encodage_type = hashlib.sha1()
+            elif encodage == "3":
+                encodage_type = hashlib.sha224()
+            elif encodage == "4":
+                encodage_type = hashlib.sha256()
+            elif encodage == "5":
+                encodage_type = hashlib.sha384()
+            elif encodage == "6":
+                encodage_type = hashlib.sha512()
+
+            encodage_type.update(dicionnaire.encode('utf-8'))
+
+            if md5_hash == encodage_type.hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 total_time_decode = time.time() - start_decode
@@ -252,14 +322,26 @@ def md5_min_maj(word, length):
 #minuscules + chiffres
 def md5_min_chif(word, length):
     start_decode = time.time()
-    global md5_hash
-    global minuscules
-    global chiffres
-    global length_decode
     if length <= length_decode:
         for letter in minuscule + chiffres:
             dicionnaire = word + letter
-            if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
+
+            if encodage == "1":
+                encodage_type = hashlib.md5()
+            elif encodage == "2":
+                encodage_type = hashlib.sha1()
+            elif encodage == "3":
+                encodage_type = hashlib.sha224()
+            elif encodage == "4":
+                encodage_type = hashlib.sha256()
+            elif encodage == "5":
+                encodage_type = hashlib.sha384()
+            elif encodage == "6":
+                encodage_type = hashlib.sha512()
+
+            encodage_type.update(dicionnaire.encode('utf-8'))
+
+            if md5_hash == encodage_type.hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + "\n" + '\033[0m')
                 total_time_decode = time.time() - start_decode
@@ -272,16 +354,26 @@ def md5_min_chif(word, length):
 #minuscules + chiffres + majuscules + spcharacters
 def md5_all(word, length):
     start_decode = time.time()
-    global md5_hash
-    global minuscules
-    global majuscules
-    global chiffres
-    global spcharacters
-    global length_decode
     if length <= length_decode:
         for letter in minuscules + majuscules + chiffres + spcharacters:
             dicionnaire = word + letter
-            if md5_hash == hashlib.md5(dicionnaire.encode('utf-8')).hexdigest():
+
+            if encodage == "1":
+                encodage_type = hashlib.md5()
+            elif encodage == "2":
+                encodage_type = hashlib.sha1()
+            elif encodage == "3":
+                encodage_type = hashlib.sha224()
+            elif encodage == "4":
+                encodage_type = hashlib.sha256()
+            elif encodage == "5":
+                encodage_type = hashlib.sha384()
+            elif encodage == "6":
+                encodage_type = hashlib.sha512()
+
+            encodage_type.update(dicionnaire.encode('utf-8'))
+
+            if md5_hash == encodage_type.hexdigest():
                 print('\033[35m' + "\nLe hash déchiffré est " + '\033[0m' + '\033[32m' + word + letter)
                 print('\033[32m' + md5_hash + '\033[35m' + '\033[0m' +" = " + '\033[32m' + word + letter + '\033[0m')
                 total_time_decode = time.time() - start_decode
@@ -299,6 +391,7 @@ def erreur():
     quit()
 
 def close_chrome():
+    global driver
     driver.delete_all_cookies()
     driver.close()
 
