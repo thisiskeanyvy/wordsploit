@@ -27,4 +27,4 @@ Elle consiste à tester toutes les solutions possibles de mots de passe ou de co
 - **Attaque par paradoxe des anniversaires** :  
 C'est un résultat probabiliste qui est utilisé dans les attaques contre les fonctions de hachage. Ce paradoxe permet de donner une borne supérieure de résistance aux collisions d’une telle fonction. Cette limite est de l'ordre de la racine de la taille de la sortie.
 
-Dans notre cas, la méthode d'attaque cryptanalytique utilisée pour trouver le message déchiffré est l'attaque par force brute en récursif car le programme est conçu en Python. Il permet ainsi de déchiffrer un message chiffré avec n'importe qu'elle méthode tout en testant toutes les combinaisons rapidement et efficacement.
+Dans notre cas, la méthode d'attaque cryptanalytique utilisée pour trouver le message déchiffré est l'attaque par force brute en récursif car le programme est conçu en Python. Il permet ainsi de déchiffrer un message chiffré avec n'importe qu'elle méthode tout en testant toutes les combinaisons possibles rapidement et efficacement.
